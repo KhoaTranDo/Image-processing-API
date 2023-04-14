@@ -4,7 +4,6 @@
   "description": "\"# Image-processing-API\"",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ./**.ts",
     "prettier": "prettier --config .prettierrc ./build/*.js --write",
     "build": "npx tsc",
