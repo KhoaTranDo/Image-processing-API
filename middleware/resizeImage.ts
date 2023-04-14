@@ -14,7 +14,7 @@ const resizeImage = async (imageData: ImageProperties): Promise<string> => {
         await image_handle.resize(imageData.width, imageData.height)
             .toFile(outputFile + image_output)
         return image_output
-    } catch (err: any) {
+    } catch (err) {
         return "Transform image failed"
     }
 }

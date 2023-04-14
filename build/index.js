@@ -31,7 +31,7 @@ app.get("/images", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         res.end(imageThumb);
     }
     catch (err) {
-        res.status(400).send("Resize image failed");
+        res.status(400).send("Transform image failed");
     }
 }));
 app.listen(port, () => {

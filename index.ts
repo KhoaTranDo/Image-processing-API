@@ -18,7 +18,7 @@ app.get("/images", async (req: Request, res: Response) => {
         const imageThumb = await fs.readFile(`${outputFile}${imageThumbPath}`);
         res.end(imageThumb);
     } catch (err) {
-        res.status(400).send("Resize image failed");
+        res.status(400).send("Transform image failed");
     }
 });
 
