@@ -14,6 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const resizeImage_1 = __importDefault(require("./middleware/resizeImage"));
+const outputFile = "./assets/thumb/";
+const fs_1 = require("fs");
 const app = (0, express_1.default)();
 const port = 3000;
 app.get("/images", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -24,11 +26,12 @@ app.get("/images", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             width: parseInt(width),
             height: parseInt(height),
         };
-        const dataI = yield resizeImage_1.default.resizeImage(imageData);
-        res.end(dataI);
+        const imageThumbPath = yield resizeImage_1.default.resizeImage(imageData);
+        const imageThumb = yield fs_1.promises.readFile(`${outputFile}${imageThumbPath}`);
+        res.end(imageThumb);
     }
     catch (err) {
-        res.send(err);
+        res.status(400).send("Resize image failed");
     }
 }));
 app.listen(port, () => {

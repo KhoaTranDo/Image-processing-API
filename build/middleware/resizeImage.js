@@ -15,27 +15,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sharp_1 = __importDefault(require("sharp"));
 const inputFile = "./assets/full/";
 const outputFile = "./assets/thumb/";
-const fs_1 = require("fs");
 const resizeImage = (imageData) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const dir_image_input = `${inputFile}${imageData.filename}.jpg`;
         const image_output = `${imageData.filename}_thumb.jpg`;
-        let image_thumb;
         const image_handle = (0, sharp_1.default)(dir_image_input);
         yield image_handle.resize(imageData.width, imageData.height)
             .toFile(outputFile + image_output);
-        image_thumb = yield readData(image_output);
-        return image_thumb;
+        return image_output;
     }
     catch (err) {
-        throw new Error("Resize image error");
+        return "Transform image failed";
     }
 });
-const readData = (filename) => __awaiter(void 0, void 0, void 0, function* () {
-    const imageFile = yield fs_1.promises.readFile(`${outputFile}${filename}`);
-    return imageFile;
-});
 exports.default = {
-    resizeImage,
-    readData
+    resizeImage
 };
