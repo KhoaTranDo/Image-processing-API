@@ -10,7 +10,7 @@ interface ImageProperties {
 const resizeImage = async (imageData: ImageProperties): Promise<string> => {
   try {
     const dir_image_input = `${inputFile}${imageData.filename}.jpg`;
-    const dir_image_output = `${outputFile}${imageData.filename}_thumb.jpg`;
+    const dir_image_output = `${outputFile}${imageData.filename}-${imageData.width}-${imageData.height}_thumb.jpg`;
 
     const image_handle = sharp(dir_image_input);
     if (!fs.existsSync(dir_image_output))

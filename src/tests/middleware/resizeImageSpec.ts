@@ -14,7 +14,7 @@ describe("Test transform image", () => {
   };
 
   it("Test transform image already exist", async () => {
-    const dir_image_output = `${outputFile}${passImageData.filename}_thumb.jpg`;
+    const dir_image_output = `${outputFile}${passImageData.filename}-${passImageData.width}-${passImageData.height}_thumb.jpg`;
     const imagePath = await resizeImage.resizeImage(passImageData);
     expect(imagePath).toEqual(dir_image_output);
   });

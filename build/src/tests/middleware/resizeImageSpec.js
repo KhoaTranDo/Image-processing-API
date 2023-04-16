@@ -26,7 +26,7 @@ describe("Test transform image", () => {
         height: 200,
     };
     it("Test transform image already exist", () => __awaiter(void 0, void 0, void 0, function* () {
-        const dir_image_output = `${outputFile}${passImageData.filename}_thumb.jpg`;
+        const dir_image_output = `${outputFile}${passImageData.filename}-${passImageData.width}-${passImageData.height}_thumb.jpg`;
         const imagePath = yield resizeImage_1.default.resizeImage(passImageData);
         expect(imagePath).toEqual(dir_image_output);
     }));

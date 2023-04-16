@@ -19,7 +19,7 @@ const fs_1 = __importDefault(require("fs"));
 const resizeImage = (imageData) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const dir_image_input = `${inputFile}${imageData.filename}.jpg`;
-        const dir_image_output = `${outputFile}${imageData.filename}_thumb.jpg`;
+        const dir_image_output = `${outputFile}${imageData.filename}-${imageData.width}-${imageData.height}_thumb.jpg`;
         const image_handle = (0, sharp_1.default)(dir_image_input);
         if (!fs_1.default.existsSync(dir_image_output))
             yield image_handle
