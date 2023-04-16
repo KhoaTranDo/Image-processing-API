@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const resizeImage_1 = __importDefault(require("../../../middleware/resizeImage"));
 describe("Test transform image", () => {
+    const outputFile = "./assets/thumb/";
     const passImageData = {
         filename: "cropland",
         width: 200,
@@ -24,12 +25,14 @@ describe("Test transform image", () => {
         width: 200,
         height: 200,
     };
-    it('Test transform image already exist', () => __awaiter(void 0, void 0, void 0, function* () {
+    it("Test transform image already exist", () => __awaiter(void 0, void 0, void 0, function* () {
+        const dir_image_output = `${outputFile}${passImageData.filename}_thumb.jpg`;
         const imagePath = yield resizeImage_1.default.resizeImage(passImageData);
-        expect(imagePath).toEqual(`${passImageData.filename}_thumb.jpg`);
+        expect(imagePath).toEqual(dir_image_output);
     }));
-    it('Test transform image does not exist', () => __awaiter(void 0, void 0, void 0, function* () {
-        const imagePath = yield resizeImage_1.default.resizeImage(failImageData);
-        expect(imagePath).toEqual("Transform image failed");
-    }));
+    it("Test transform image does not exist", () => {
+        return resizeImage_1.default.resizeImage(failImageData).catch((error) => {
+            expect(error).toEqual("Transform image failed");
+        });
+    });
 });

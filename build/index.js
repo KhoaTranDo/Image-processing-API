@@ -14,24 +14,52 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const resizeImage_1 = __importDefault(require("./middleware/resizeImage"));
-const outputFile = "./assets/thumb/";
-const fs_1 = require("fs");
+const inputFile = "./assets/full/";
+const fs_1 = __importDefault(require("fs"));
 const app = (0, express_1.default)();
 const port = 3000;
 app.get("/images", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { filename, width, height } = req.query;
+        if (!width) {
+            throw "Missing width";
+        }
+        if (!filename) {
+            throw "Missing filename";
+        }
+        if (!height) {
+            throw "Missing height";
+        }
+        if (isNaN(Number(width)) || Number(width) < 0) {
+            throw "Invalid width data";
+        }
+        if (isNaN(Number(height)) || Number(height) < 0) {
+            throw "Invalid height data";
+        }
         const imageData = {
             filename: filename,
             width: parseInt(width),
             height: parseInt(height),
         };
-        const imageThumbPath = yield resizeImage_1.default.resizeImage(imageData);
-        const imageThumb = yield fs_1.promises.readFile(`${outputFile}${imageThumbPath}`);
-        res.end(imageThumb);
+        if (fs_1.default.existsSync(`${inputFile}${filename}.jpg`))
+            yield resizeImage_1.default
+                .resizeImage(imageData)
+                .then((data) => {
+                fs_1.default.readFile(data, (err, data) => {
+                    if (err) {
+                        res.status(400).send("Read file transform failed");
+                    }
+                    res.end(data);
+                });
+            })
+                .catch((err) => {
+                res.status(400).end(err);
+            });
+        else
+            throw "Original image not found";
     }
     catch (err) {
-        res.status(400).send("Transform image failed");
+        res.status(400).end(err);
     }
 }));
 app.listen(port, () => {

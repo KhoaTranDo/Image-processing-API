@@ -15,13 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const index_1 = __importDefault(require("../../index"));
 const supertest_1 = __importDefault(require("supertest"));
 const request = (0, supertest_1.default)(index_1.default);
-describe('Test endpoint responses', () => {
+describe("Test endpoint responses", () => {
     const imageData = {
         filename: "cropland",
         width: 200,
         height: 200,
     };
-    it('Test gets the api endpoint with correct data', () => __awaiter(void 0, void 0, void 0, function* () {
+    it("Test gets the api endpoint with correct data", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield request.get(`/images/?filename=${imageData.filename}&width=${imageData.width}&height=${imageData.height}`);
         expect(response.status).toBe(200);
     }));
